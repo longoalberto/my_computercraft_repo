@@ -2,9 +2,25 @@ FUEL_CHEST = 1
 RESOURCE_CHEST = 2
 FUEL_STACK_SIZE = 64
 
-stone_variants = {
+stone_variants = {    
+    "minecraft:cobblestone",
+    "minecraft:gravel",
+    "minecraft:grass",
+    "minecraft:dirt",
+    "minecraft:sand",
+    "minecraft:sandstone",
     "minecraft:stone",
-    "quark:basalt"}
+    "quark:basalt",
+    "nuclearcraft:dry_earth",
+    "biomesoplenty:grass",
+    "biomesoplenty:dirt",
+    "biomesoplenty:mud",
+    "chisel:basalt",
+    "chisel:basalt2",
+    "chisel:marble",
+    "chisel:marble2",
+    "chisel:limestone",
+    "chisel:limestone2"}
 
 function test_print()
     print("harambe")
@@ -80,19 +96,48 @@ function check_against_stone_variants(block)
     return false
 end
 
-function selective_dig()
-    local success_top, block_top = turtle.inspectUp()
-    local success_down, block_down = turtle.inspectDown()
+function vertical_dig(steps)
+    for i=1,steps do
+        check_and_refuel()
+        check_and_empty_inv()
 
-    print(check_against_stone_variants(block_top["name"]))
-    print(check_against_stone_variants(block_down["name"]))    
+        if not turtle.forward() then
+            turtle.dig()
+            turtle.forward()
+        end
 
+        local success_top, block_top = turtle.inspectUp()
+        local success_down, block_down = turtle.inspectDown()
+
+        if (success_top or success_down) then
+            check_and_empty_inv()
+            if check_against_stone_variants(block_top["name"]) then
+                turtle.digUp()
+            end
+            if check_against_stone_variants(block_down["name"]) then
+                turtle.digDown()
+            end
+        end
+    end
 end
 
-function safe_dig()
+function standard_dig()
     check_and_refuel()
     check_and_empty_inv()
-    if not turtle.move() then
+    if not turtle.forward() then
         turtle.dig()
+    end
+end
+
+function dig_layer_spiral(width)
+    local distance_to_dig = width-1
+    vertical_dig(distance_to_dig)
+    turtle.turnRight()
+    while distance_to_dig > 0 do
+        vertical_dig(distance_to_dig)
+        turtle.turnRight()
+        vertical_dig(distance_to_dig)
+        turtle.turnRight()
+        distance_to_dig = distance_to_dig - 1
     end
 end
