@@ -142,4 +142,10 @@ function dig_layer_spiral(width)
         turtle.turnRight()
         distance_to_dig = distance_to_dig - 1
     end
+
+    vertical_dig(8)
+    turtle.turnLeft()
+    vertical_dig(7)
+    turtle.turnRight()
+    turtle.turnRight()
 end
