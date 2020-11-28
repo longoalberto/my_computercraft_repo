@@ -3,7 +3,7 @@ RESOURCE_CHEST = 2
 FUEL_STACK_SIZE = 64
 
 stone_variants = {
-    "minecraft:stone"
+    "minecraft:stone",
     "quark:basalt"}
 
 function test_print()
@@ -52,7 +52,7 @@ function check_and_empty_inv()
             turtle.place()
         end
 
-        for i = 3, i = 16 do
+        for i=3,16 do
             turtle.select(i)
             if not turtle.drop() then
                 log("e", "Resource chest is full")
@@ -84,8 +84,8 @@ function selective_dig()
     local success_top, block_top = turtle.inspectUp()
     local success_down, block_down = turtle.inspectDown()
 
-    print(check_against_stone_variants(success_top))
-    print(check_against_stone_variants(success_down))    
+    print(check_against_stone_variants(block_top["name"]))
+    print(check_against_stone_variants(block_down["name"]))    
 
 end
 
