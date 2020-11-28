@@ -1,2 +1,4 @@
 os.loadAPI("turtleapi")
-api.test_print()
+turtleapi.test_print()
+
+turtleapi.selective_dig()
