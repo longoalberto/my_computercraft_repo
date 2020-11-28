@@ -19,6 +19,8 @@ function wrapper(url, file)
     download(url, file)
 end
 
+print(fs.exists("file_index"))
 wrapper("https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/file_index.lua", "file_index")
+print(fs.exists("file_index"))
 
 shell.run("file_index")
