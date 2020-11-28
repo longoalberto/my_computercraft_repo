@@ -1,0 +1,3 @@
+wget https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/sync.lua sync
+
+paste this into terminal and call it to download all programs
