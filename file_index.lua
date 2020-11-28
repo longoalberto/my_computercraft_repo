@@ -6,5 +6,5 @@ shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_
 shell.run("rm test")
 shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/test.lua test")
 
-rm("api")
+shell.run("rm api")
 shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/api/turtle.lua turtle")
