@@ -1,2 +1,2 @@
-os.loadAPI("api/turtle")
+os.loadAPI("turtleapi")
 api.test_print()
