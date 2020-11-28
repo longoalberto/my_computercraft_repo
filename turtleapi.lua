@@ -32,9 +32,9 @@ end
 function check_and_refuel()
 --TODO: check id of FUEL_SLOT and move it away if its not valid
     local fuel_level = turtle.getFuelLevel()
-    print("fuel level is "...fuel_level)
+    print("fuel level is "..fuel_level)
     while fuel_level < 2000 do
-        print("inside while loop fuel level is "...fuel_level)
+        print("inside while loop fuel level is "..fuel_level)
         turtle.select(FUEL_CHEST)
         turtle.turnRight()
         turtle.turnRight()
@@ -113,10 +113,10 @@ function vertical_dig(steps)
 
         if (success_top or success_down) then
             check_and_empty_inv()
-            if check_against_stone_variants(block_top["name"]) then
+            if not check_against_stone_variants(block_top["name"]) then
                 turtle.digUp()
             end
-            if check_against_stone_variants(block_down["name"]) then
+            if not check_against_stone_variants(block_down["name"]) then
                 turtle.digDown()
             end
         end
