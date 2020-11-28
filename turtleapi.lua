@@ -114,6 +114,7 @@ function go_down(depth)
         if not turtle.down() then
             if not turtle.digDown() then
                 return false
+            end
             turtle.down()
         end
     end
