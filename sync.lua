@@ -1,6 +1,7 @@
 if arg[1] == "update" then
     shell.run("rm sync")
     shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/sync.lua sync")
+    shell.run("sync")
 else
     print("Redownloading program files")
 
