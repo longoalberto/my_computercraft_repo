@@ -98,6 +98,28 @@ function check_against_stone_variants(block)
     return false
 end
 
+function check_if_bedrock_around()
+    local success_front, block_front = turtle.inspect()
+    local success_down, block_down = turtle.inspectDown()
+
+    if (block_front["name"] == "minecraft:bedrock") or (block_down["name"] == "minecraft:bedrock") then
+        return true
+    else 
+        return false
+    end
+end
+
+function go_down(depth)
+    for i=1,depth do
+        if not turtle.down() then
+            if not turtle.digDown() then
+                return false
+            turtle.down()
+        end
+    end
+    return true
+end
+
 function vertical_dig(steps)
     for i=1,steps do
         check_and_refuel()
@@ -129,6 +151,7 @@ function standard_dig()
     if not turtle.forward() then
         turtle.dig()
     end
+    turtle.dig()
 end
 
 function dig_layer_spiral(width)
