@@ -32,7 +32,9 @@ end
 function check_and_refuel()
 --TODO: check id of FUEL_SLOT and move it away if its not valid
     local fuel_level = turtle.getFuelLevel()
+    print("fuel level is "...fuel_level)
     while fuel_level < 2000 do
+        print("inside while loop fuel level is "...fuel_level)
         turtle.select(FUEL_CHEST)
         turtle.turnRight()
         turtle.turnRight()
@@ -45,7 +47,7 @@ function check_and_refuel()
             log("e", "Fuel chest empty.")
         end
 
-        if not turtle.refuel(64) then
+        if not turtle.refuel(FUEL_STACK_SIZE) then
             local wrong_fuel = turtle.getItemDetail()["name"]
             log("e", "Incompatible Fuel"..wrong_fuel)
             turtle.drop()
