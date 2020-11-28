@@ -8,6 +8,4 @@ shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_
 
 shell.run("rm api")
 shell.run("mkdir api")
-shell.run("cd api")
-shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/api/turtle.lua turtle")
-shell.run("cd ..")
+shell.run("wget https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/api/turtle.lua 'api/turtle'")
