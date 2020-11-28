@@ -56,6 +56,7 @@ function check_and_refuel()
         turtle.dig()
         turtle.turnRight()
         turtle.turnRight()
+        local fuel_level = turtle.getFuelLevel()
     end
 end
 
