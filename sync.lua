@@ -1,4 +1,4 @@
-function download(url, file)
+function download(file,url)
     local data = http.get(url).readAll()
     if not data then
           error("Could not connect to website")
@@ -14,13 +14,7 @@ function check_delete(file)
     end
 end
 
-function wrapper(url, file)
-    check_delete(file)
-    download(url, file)
-end
-
-print(fs.exists("file_index"))
-wrapper("https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/file_index.lua", "file_index")
-print(fs.exists("file_index"))
+check_delete("file_index")
+download("file_index", "https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/file_index.lua")
 
 shell.run("file_index")
