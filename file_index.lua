@@ -1,5 +1,6 @@
-function download(url, file)
-    local data = http.get(url).readAll()
+function download(file, url)
+    print("DEBUG"..url)
+    data = http.get(url).readAll()
     if not data then
           error("Could not connect to website")
     end
@@ -14,15 +15,16 @@ function check_delete(file)
     end
 end
 
-function wrapper(url, file)
-    check_delete(file)
-    download(url, file)
-end
-
 print("Redownloading program files")
 
-wrapper("https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/quarry.lua", "quarry")
-wrapper("https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/test.lua", "test")
-wrapper("https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/api/turtleapi.lua", "turtleapi")
+check_delete("quarry")
+download("quarry", "https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/quarry.lua")
+
+check_delete("test")
+download("test", "https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/test.lua")
+
+check_delete("turtleapi")
+download("turtleapi", "https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/api/turtleapi.lua")
 
 print("Download Complete")
+
