@@ -6,12 +6,13 @@ function download(url, file)
     file = fs.open(file, "w")
     file.write(data)
     file.close()
-  end
+end
 
 function check_delete(file)
     if fs.exists(file) then
         fs.delete(file)
     end
+end
 
 function wrapper(url, file)
     check_delete(file)
