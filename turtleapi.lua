@@ -22,7 +22,13 @@ stone_variants = {
     "chisel:marble",
     "chisel:marble2",
     "chisel:limestone",
-    "chisel:limestone2"}
+    "chisel:limestone2"
+}
+
+falling_blocks = {
+    "minecraft:gravel",
+    "minecraft:sand"
+}
 
 function test_print()
     print("harambe")
@@ -100,6 +106,23 @@ function check_against_stone_variants(block)
     return false
 end
 
+function handle_falling_blocks(block)
+    for i, block_name in pairs(falling_blocks) do
+        if block_name == nil then
+            return false
+        elseif block_name == block then
+            turtle.dig()
+            sleep(0.5)
+
+            local success, next_block = turtle.inspect()
+            if success then
+                local next_block_name = next_block["name"]
+                handle_falling_blocks(next_block_name)
+            end
+        end    
+    end
+end
+
 function check_if_bedrock_around()
     local success_front, block_front = turtle.inspect()
     local success_down, block_down = turtle.inspectDown()
@@ -127,6 +150,11 @@ function vertical_dig(steps)
     for i=1,steps do
         check_and_refuel()
         check_and_empty_inv()
+        
+        local success_front, block_front = turtle.inspect()
+        if success_front then
+            handle_falling_blocks(next_block_name)
+        end
 
         if not turtle.forward() then
             turtle.dig()
@@ -169,9 +197,9 @@ function dig_layer_spiral(width)
         distance_to_dig = distance_to_dig - 1
     end
 
-    vertical_dig(8)
+    vertical_dig(width/2)
     turtle.turnLeft()
-    vertical_dig(7)
+    vertical_dig((width/2)-1)
     turtle.turnRight()
     turtle.turnRight()
 end
