@@ -2,7 +2,7 @@ FUEL_CHEST = 1
 RESOURCE_CHEST = 2
 FUEL_STACK_SIZE = 64
 
-fuel_level = turtle.etFuelLevel()
+fuel_level = turtle.getFuelLevel()
 
 stone_variants = {    
     "minecraft:cobblestone",
