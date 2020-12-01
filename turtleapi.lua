@@ -2,6 +2,8 @@ FUEL_CHEST = 1
 RESOURCE_CHEST = 2
 FUEL_STACK_SIZE = 64
 
+fuel_level = turtle.etFuelLevel()
+
 stone_variants = {    
     "minecraft:cobblestone",
     "minecraft:gravel",
@@ -31,7 +33,7 @@ end
 
 function check_and_refuel()
 --TODO: check id of FUEL_SLOT and move it away if its not valid
-    local fuel_level = turtle.getFuelLevel()
+    fuel_level = turtle.getFuelLevel()
     while fuel_level < 2000 do
         log("l", "fuel level at"..fuel_level)
         turtle.select(FUEL_CHEST)
@@ -55,7 +57,7 @@ function check_and_refuel()
         turtle.dig()
         turtle.turnRight()
         turtle.turnRight()
-        local fuel_level = turtle.getFuelLevel()
+        fuel_level = turtle.getFuelLevel()
     end
 end
 
