@@ -94,15 +94,14 @@ end
 
 chest_list, modem_pos = get_connected_devices()
 
+--item_list = chest.list()
+
 
 chest = peripheral.wrap(chest_list[1])
-item_list = chest.list()
+chest_size = chest.size()
 
-for index, item in pairs(item_list) do
-    if not item then
-        break
-    end
+for i, chest_size do
 
-    print(item[index]["name"])
+    print( chest.getItem()["name"] )
+
 end
-
