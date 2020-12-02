@@ -54,28 +54,33 @@ function set_relative_direction(dir)
         end
     elseif dir == "back" then
         while current_direction ~= 3 do
-            tracked_turn("right")
+            tracked_turn("left")
         end
     elseif dir == "left" then
         while current_direction ~= 4 do
-            tracked_turn("right")
+            tracked_turn("left")
         end
     end
 end
 
 function go_to_start()
+    print("gotostart called")
     if coordinates[2] > 0 then
+        print("coords "..coordinates[2].." evaluated facing back")
         set_relative_direction("back")
         vertical_dig( coordinates[2] )
     elseif coordinates[2] < 0 then
+        print("coords "..coordinates[2].." evaluated facing front")
         set_relative_direction("front")
         vertical_dig( math.abs(coordinates[2]) )
     end
 
     if coordinates[1] > 0 then
+        print("coords "..coordinates[2].." evaluated facing right")
         set_relative_direction("right")
         vertical_dig( coordinates[1] )
     elseif coordinates[1] < 0 then
+        print("coords "..coordinates[2].." evaluated facing left")
         set_relative_direction("left")
         vertical_dig( math.abs( coordinates[1] ) )
     end
@@ -96,6 +101,7 @@ function tracked_turn(dir)
         current_direction = current_direction + 4
     end
     print("current dir: "..current_direction.." coords: "..coordinates[1].." "..coordinates[2])
+    sleep(2edi)
 end
 
 function check_and_refuel()
