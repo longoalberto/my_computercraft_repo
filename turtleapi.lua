@@ -44,6 +44,7 @@ function log(error_code, error_desc)
 end
 
 function set_relative_direction(dir)
+    print(current_direction)
     if dir == "front" then
         while current_direction ~= 1 do
             tracked_turn("right")
@@ -80,9 +81,12 @@ function go_to_start()
         set_relative_direction("right")
         vertical_dig( math.abs( coordinates[1] ) )
     end
+
+    set_relative_direction("front")
 end
 
 function tracked_turn(dir)
+    print("direction is "..current_direction.."turning")
     if dir == "right" then
         current_direction = current_direction + 1
         turtle.turnRight()
@@ -93,11 +97,10 @@ function tracked_turn(dir)
 
     if current_direction > 4 then
         current_direction = current_direction - 4
-    elseif current_direction < 0 then
+    elseif current_direction <= 0 then
         current_direction = current_direction + 4
     end
     print("current dir: "..current_direction.." coords: "..coordinates[1].." "..coordinates[2])
-    sleep(2)
 end
 
 function check_and_refuel()
@@ -269,12 +272,6 @@ function dig_layer_spiral(width)
         tracked_turn("right")
         distance_to_dig = distance_to_dig - 1
     end
-
---vertical_dig(width/2)
---tracked_turn("left")
---vertical_dig((width/2)-1)
---tracked_turn("right")
---tracked_turn("right")
 
     go_to_start()
 end
