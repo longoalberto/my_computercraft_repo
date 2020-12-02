@@ -73,6 +73,16 @@ mods_blacklist = {
     "quark"
 }
 
+function filter_check(item_name)
+    for i, item_name in pairs(armor_variants) do
+        if block_name == nil then
+            return false
+        elseif block_name == block then
+            return true
+        end
+    end
+    return false
+end
 
 function get_connected_devices()
     local var = peripheral.getNames()
@@ -100,8 +110,11 @@ chest_list, modem_pos = get_connected_devices()
 chest = peripheral.wrap(chest_list[1])
 chest_size = chest.size()
 
-for i, chest_size do
+for i=1,chest_size,+1 do
 
-    print( chest.getItem()["name"] )
+    local item_name = chest.getItemMeta(i)["name"]
+    if filter_check(item_name) then
+        print(item_name)
+    end
 
 end
