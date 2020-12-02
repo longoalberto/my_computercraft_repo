@@ -1,3 +1,5 @@
+TRASH_CHEST = "xu2:tiletrashcan_0" --manually specify trash can name-id
+
 armor_variants = {
     "minecraft:leather_helmet_",
     "minecraft:leather_chestplate_",
@@ -71,13 +73,29 @@ mods_blacklist = {
     "quark"
 }
 
+
 function get_connected_devices()
     local var = peripheral.getNames()
     local modem = table.remove(var, 1)
+
+    for i, device_name in ipairs(var) do
+        if device_name == TRASH_CHEST then
+            print("debug trash found")
+            trash = table.remove(var, i)
+        end
+    end
+
+    if not trash then
+        print("Trash peripheral not found, check denomination of TRASH_CHEST variable")
+        os.exit()
+    end
     return var, modem
 end
 
-device_list, modem_pos = get_connected_devices()
+chest_list, modem_pos = get_connected_devices()
 
-print(device_list)
+
+
+print(chest_list)
 print(modem_pos)
+print(TRASH_CHEST)
