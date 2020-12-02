@@ -236,13 +236,13 @@ function vertical_dig(steps)
     end
 
     if current_direction == 1 then
-        coordinates[1] = coordinates[1] + 1
+        coordinates[1] = coordinates[1] + steps
     elseif current_direction == 2 then
-        coordinates[2] = coordinates[2] + 1
+        coordinates[2] = coordinates[2] + steps
     elseif current_direction == 3 then
-        coordinates[1] = coordinates[1] - 1
+        coordinates[1] = coordinates[1] - steps
     elseif current_direction == 4 then
-        coordinates[2] = coordinates[2] - 1
+        coordinates[2] = coordinates[2] - steps
     end
 end
 
