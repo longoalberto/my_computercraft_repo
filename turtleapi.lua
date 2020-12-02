@@ -64,20 +64,20 @@ function set_relative_direction(dir)
 end
 
 function go_to_start()
-    if coordinates[1] > 0 then
-        set_relative_direction("back")
-        vertical_dig( coordinates[1] )
-    elseif coordinates[1] < 0 then
-        set_relative_direction("front")
-        vertical_dig( math.abs(coordinates[1]) )
-    end
-
     if coordinates[2] > 0 then
-        set_relative_direction("right")
+        set_relative_direction("back")
         vertical_dig( coordinates[2] )
     elseif coordinates[2] < 0 then
+        set_relative_direction("front")
+        vertical_dig( math.abs(coordinates[2]) )
+    end
+
+    if coordinates[1] > 0 then
+        set_relative_direction("right")
+        vertical_dig( coordinates[1] )
+    elseif coordinates[1] < 0 then
         set_relative_direction("left")
-        vertical_dig( math.abs( coordinates[2] ) )
+        vertical_dig( math.abs( coordinates[1] ) )
     end
 end
 
@@ -236,13 +236,13 @@ function vertical_dig(steps)
     end
 
     if current_direction == 1 then
-        coordinates[1] = coordinates[1] + steps
-    elseif current_direction == 2 then
         coordinates[2] = coordinates[2] + steps
+    elseif current_direction == 2 then
+        coordinates[1] = coordinates[1] + steps
     elseif current_direction == 3 then
-        coordinates[1] = coordinates[1] - steps
-    elseif current_direction == 4 then
         coordinates[2] = coordinates[2] - steps
+    elseif current_direction == 4 then
+        coordinates[1] = coordinates[1] - steps
     end
 end
 
