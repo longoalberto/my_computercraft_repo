@@ -1,5 +1,5 @@
 os.loadAPI("turtleapi")
 turtleapi.test_print()
 
-turtleapi.vertical_dig(6)
+turtleapi.dig_layer_spiral(4)
 
