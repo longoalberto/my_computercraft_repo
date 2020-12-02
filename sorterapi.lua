@@ -91,6 +91,7 @@ function get_connected_devices()
     for i, device_name in ipairs(var) do
         if device_name == TRASH_CHEST then
             print("Trash peripheral found and connected")
+            trash_object = peripheral.wrap(TRASH_CHEST)
             trash = table.remove(var, i)
         end
     end
@@ -99,10 +100,10 @@ function get_connected_devices()
         print("Trash peripheral not found, check denomination of TRASH_CHEST variable in sorterApi.lua")
         os.exit()
     end
-    return var, modem
+    return var, modem, trash_object
 end
 
-chest_list, modem_pos = get_connected_devices()
+chest_list, modem_pos, trash_object = get_connected_devices()
 
 --item_list = chest.list()
 
@@ -116,6 +117,6 @@ for i=1,chest_size,1 do
     print(item_name)
     if filter_check(item_name) then
         local item_object = chest.getItem(i)
-        item_object.drop(i, TRASH_CHEST)
-    end
+        item_object.drop(i, trash_object)
+    end 
 end
