@@ -80,7 +80,7 @@ function get_connected_devices()
 
     for i, device_name in ipairs(var) do
         if device_name == TRASH_CHEST then
-            print("debug trash found")
+            print("Trash peripheral found and connected")
             trash = table.remove(var, i)
         end
     end
@@ -93,8 +93,6 @@ function get_connected_devices()
 end
 
 chest_list, modem_pos = get_connected_devices()
-
-
 
 print(chest_list)
 print(modem_pos)
