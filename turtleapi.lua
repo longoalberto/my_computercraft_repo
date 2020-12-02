@@ -86,15 +86,16 @@ function tracked_turn(dir)
         current_direction = current_direction + 1
         turtle.turnRight()
     elseif dir == "left" then
-        current_direction + current_direction - 1
+        current_direction = current_direction - 1
         turtle.turnLeft()
     end
 
     if current_direction > 4 then
         current_direction = current_direction - 4
-    elseif current_direction < then
+    elseif current_direction < 0 then
         current_direction = current_direction + 4
     end
+    print("current dir: "..current_direction.." coords: "..coordinates[1].." "..coordinates[2])
 end
 
 function check_and_refuel()
@@ -234,13 +235,13 @@ function vertical_dig(steps)
         end
     end
 
-    if current_direction = 1 then
+    if current_direction == 1 then
         coordinates[1] = coordinates[1] + 1
-    elseif current_direction = 2 then
+    elseif current_direction == 2 then
         coordinates[2] = coordinates[2] + 1
-    elseif current_direction = 3 then
+    elseif current_direction == 3 then
         coordinates[1] = coordinates[1] - 1
-    elseif current_direction = 4 then
+    elseif current_direction == 4 then
         coordinates[2] = coordinates[2] - 1
     end
 end
