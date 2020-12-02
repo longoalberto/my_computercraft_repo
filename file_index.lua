@@ -25,5 +25,8 @@ download("test", "https://raw.githubusercontent.com/longoalberto/my_computercraf
 check_delete("turtleapi")
 download("turtleapi", "https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/turtleapi.lua")
 
+check_delete("sorterapi")
+download("sorterapi", "https://raw.githubusercontent.com/longoalberto/my_computercraft_repo/main/sorterapi.lua")
+
 print("Download Complete")
 
