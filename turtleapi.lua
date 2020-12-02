@@ -155,7 +155,9 @@ function vertical_dig(steps)
 
         if not turtle.forward() then
             turtle.dig()
-            turtle.forward()
+            while not turtle.forward() then
+                sleep(1)
+            end
         end
 
         local success_top, block_top = turtle.inspectUp()
