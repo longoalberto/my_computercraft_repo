@@ -86,7 +86,7 @@ function get_connected_devices()
     end
 
     if not trash then
-        print("Trash peripheral not found, check denomination of TRASH_CHEST variable")
+        print("Trash peripheral not found, check denomination of TRASH_CHEST variable in sorterApi.lua")
         os.exit()
     end
     return var, modem
@@ -94,6 +94,10 @@ end
 
 chest_list, modem_pos = get_connected_devices()
 
-print(chest_list)
-print(modem_pos)
-print(TRASH_CHEST)
+
+chest = peripheral.wrap(chest_list[1])
+item_list = chest.list()
+
+for i,j in pairs(item_list) do
+    print(i.." - "..j)
+end
