@@ -1,4 +1,4 @@
-TRASH_CHEST = "xu2:tiletrashcan_0" --manually specify trash can name-id
+TRASH_CHEST = "right" --manually specify trash can name-id or side if next to pc
 
 armor_variants = {
     "minecraft:leather_helmet_",
@@ -117,6 +117,6 @@ for i=1,chest_size,1 do
     print(item_name)
     if filter_check(item_name) then
         local item_object = chest.getItem(i)
-        item_object.drop(i, trash_object)
+        item_object.drop(i, TRASH_CHEST)
     end 
 end
