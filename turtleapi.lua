@@ -6,7 +6,7 @@ fuel_level = turtle.getFuelLevel()
 
 stone_variants = {    
     "minecraft:cobblestone",
-    "minecraft:gravel",
+--    "minecraft:gravel",
     "minecraft:grass",
     "minecraft:dirt",
     "minecraft:sand",
@@ -80,10 +80,7 @@ function check_and_empty_inv()
 
         for i=3,16 do
             turtle.select(i)
-            if not turtle.drop() then
-                log("e", "Resource chest is full")
-                break
-            end            
+            turtle.drop() 
         end
         
         turtle.select(RESOURCE_CHEST)
