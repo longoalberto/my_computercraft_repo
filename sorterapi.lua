@@ -73,7 +73,7 @@ mods_blacklist = {
 
 function get_connected_devices()
     local var = peripheral.getNames()
-    local modem = var.remove[0]
+    local modem = table.remove(var, 1)
     return var, modem
 end
 
