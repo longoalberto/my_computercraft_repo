@@ -115,6 +115,7 @@ for i=1,chest_size,1 do
     local item_name = chest.getItemMeta(i)["name"]
     print(item_name)
     if filter_check(item_name) then
-        print(item_name)
+        local item_object = chest.getItem(i)
+        item_object.drop(i, TRASH_CHEST)
     end
 end
