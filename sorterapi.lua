@@ -85,43 +85,20 @@ function filter_check(item_name)
     return false
 end
 
-function get_connected_devices()
-    local var = peripheral.getNames()
-    local modem = table.remove(var, 1)
 
-    for i, device_name in ipairs(var) do
-        if device_name == TRASH_CHEST then
-            print("Trash peripheral found and connected")
-            trash_object = peripheral.wrap(TRASH_CHEST)
-            trash = table.remove(var, i)
-        end
-    end
-
-    if not trash then
-        print("Trash peripheral not found, check denomination of TRASH_CHEST variable in sorterApi.lua")
-        os.exit()
-    end
-    return var, modem, trash_object
-end
-
-chest_list, modem_pos, trash_object = get_connected_devices()
-
-
---input = peripheral.wrap(INPUT_CHEST)
+input = peripheral.wrap(INPUT_CHEST)
 output = peripheral.wrap(OUTPUT_CHEST)
 
 input_size = input.size()
 output_size = output.size()
 
-for chest in chest_list do
-    input = peripheral.wrap(chest)
-    for i=1,input_size,1 do
-        item_name = input.getItemMeta(i)["name"]
-        if not item_name then
 
-        elseif filter_check(item_name) then
-            input.pushItems(OUTPUT_CHEST, i)
-            print("moved "..item_name.." to output chest")        
-        end 
-    end
+for i=1,input_size,1 do
+    item_name = input.getItemMeta(i)["name"]
+    if not item_name then
+
+    elseif filter_check(item_name) then
+        input.pushItems(OUTPUT_CHEST, i)
+        print("moved "..item_name.." to output chest")        
+    end 
 end
