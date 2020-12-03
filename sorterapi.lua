@@ -93,11 +93,9 @@ output_size = output.size()
 
 
 for i=1,input_size,1 do
-    local item_name = input.getItemMeta(i)["name"]
-
-    if filter_check(item_name) then
+    if not (local item_name = input.getItemMeta(i)["name"]) then
+    elseif filter_check(item_name) then
         input.pushItems(OUTPUT_CHEST, 1)
-        print("moved "..item_name.." to output chest")
-        
+        print("moved "..item_name.." to output chest")        
     end 
 end
