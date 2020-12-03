@@ -216,7 +216,7 @@ function vertical_dig(steps)
 
         local success_front, block_front = turtle.inspect()
         if success_front then
-            handle_falling_blocks(next_block_name)
+            handle_falling_blocks(block_front)
         end
 
         if not turtle.forward() then
