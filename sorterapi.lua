@@ -92,13 +92,15 @@ output = peripheral.wrap(OUTPUT_CHEST)
 input_size = input.size()
 output_size = output.size()
 
+while true do
+    for i=1,input_size,1 do
+        item_name = input.getItemMeta(i)["name"]
+        if not item_name then
 
-for i=1,input_size,1 do
-    item_name = input.getItemMeta(i)["name"]
-    if not item_name then
-
-    elseif filter_check(item_name) then
-        input.pushItems(OUTPUT_CHEST, i)
-        print("moved "..item_name.." to output chest")        
-    end 
+        elseif filter_check(item_name) then
+            input.pushItems(OUTPUT_CHEST, i)
+            print("moved "..item_name.." to output chest")        
+        end 
+    end
+    sleep(1)
 end
