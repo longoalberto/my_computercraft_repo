@@ -2,30 +2,30 @@ INPUT_CHEST = "left"
 OUTPUT_CHEST = "right" --manually specify trash can name-id or side if next to pc
 
 armor_variants = {
-    "minecraft:leather_helmet_",
-    "minecraft:leather_chestplate_",
-    "minecraft:leather_leggings_",
-    "minecraft:leather_boots_",
+    "minecraft:leather_helmet",
+    "minecraft:leather_chestplate",
+    "minecraft:leather_leggings",
+    "minecraft:leather_boots",
 
     "minecraft:iron_helmet",
     "minecraft:iron_chestplate",
     "minecraft:iron_leggings",
     "minecraft:iron_boots",
 
-    "minecraft:chainmail_helmet_",
-    "minecraft:chainmail_chestplate_",
-    "minecraft:chainmail_leggings_",
-    "minecraft:chainmail_boots_",
+    "minecraft:chainmail_helmet",
+    "minecraft:chainmail_chestplate",
+    "minecraft:chainmail_leggings",
+    "minecraft:chainmail_boots",
 
     "minecraft:golden_helmet",
     "minecraft:golden_chestplate",
     "minecraft:golden_leggings",
     "minecraft:golden_boots",
 
-    "minecraft:diamond_helmet_",
-    "minecraft:diamond_chestplate_",
-    "minecraft:diamond_leggings_",
-    "minecraft:diamond_boots_"
+    "minecraft:diamond_helmet",
+    "minecraft:diamond_chestplate",
+    "minecraft:diamond_leggings",
+    "minecraft:diamond_boots"
 }
 
 tools_variants = {
@@ -82,6 +82,27 @@ function filter_check(item_name)
             return true
         end
     end
+    for i, blacklisted_name in pairs(tools_variants) do
+        if blacklisted_name == nil then
+            return false
+        elseif blacklisted_name == item_name then
+            return true
+        end
+    end
+    for i, blacklisted_name in pairs(armor_variants) do
+        if blacklisted_name == nil then
+            return false
+        elseif blacklisted_name == item_name then
+            return true
+        end
+    end
+    for i, blacklisted_mod in pairs(mods_blacklist) do
+        if not string.find(string, blacklisted_mod) then
+            return false
+        else 
+            return true
+        end
+    end
     return false
 end
 
@@ -94,7 +115,7 @@ output_size = output.size()
 
 while true do
     for i=1,input_size,1 do
-        if not input.getItemMeta(i)["name"] then
+        if not input.getItemMeta(i) then
             break
         end
         item_name = input.getItemMeta(i)["name"]
