@@ -94,6 +94,9 @@ output_size = output.size()
 
 while true do
     for i=1,input_size,1 do
+        if not input.getItemMeta(i)["name"] then
+            break
+        end
         item_name = input.getItemMeta(i)["name"]
         if not item_name then
 
