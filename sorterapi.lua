@@ -57,7 +57,13 @@ tools_variants = {
     "minecraft:diamond_shovel",
     "minecraft:diamond_pickaxe",
     "minecraft:diamond_axe",
-    "minecraft:diamond_hoe"
+    "minecraft:diamond_hoe",
+
+	"minecraft:bow"
+
+}
+
+misc_items = {
 
 }
 
@@ -71,7 +77,8 @@ mods_blacklist = {
     "immersiveengineering",
     "redstonearsenal",
     "psi",
-    "quark"
+    "quark",
+	"tconstruct"
 }
 
 function filter_check(item_name)
@@ -82,6 +89,7 @@ function filter_check(item_name)
             return true
         end
     end
+
     for i, blacklisted_name in pairs(tools_variants) do
         if blacklisted_name == nil then
             return false
@@ -89,42 +97,52 @@ function filter_check(item_name)
             return true
         end
     end
-    for i, blacklisted_name in pairs(armor_variants) do
+
+    for i, blacklisted_name in pairs(misc_items) do
         if blacklisted_name == nil then
             return false
         elseif blacklisted_name == item_name then
             return true
         end
     end
+
     for i, blacklisted_mod in pairs(mods_blacklist) do
-        if not string.find(string, blacklisted_mod) then
-            return false
+        if not string.find(item_name, blacklisted_mod) then
         else 
             return true
         end
     end
+
     return false
 end
 
 
 input = peripheral.wrap(INPUT_CHEST)
 output = peripheral.wrap(OUTPUT_CHEST)
+top_chest=peripheral.wrap("top")
 
 input_size = input.size()
 output_size = output.size()
 
-while true do
-    for i=1,input_size,1 do
-        if not input.getItemMeta(i) then
-            break
+function test_wrapper()
+    while true do
+        for i=1,input_size,1 do
+            if not input.getItemMeta(i) then
+                break
+            end
+            item_name = input.getItemMeta(i)["name"]
+            if not item_name then
+				
+            elseif filter_check(item_name) then
+                input.pushItems(OUTPUT_CHEST, i)
+                print("moved "..item_name.." to output chest")
+            else
+                input.pushItems("top", i)
+                print("moved "..item_name.." to top chest")
+            end 
         end
-        item_name = input.getItemMeta(i)["name"]
-        if not item_name then
-
-        elseif filter_check(item_name) then
-            input.pushItems(OUTPUT_CHEST, i)
-            print("moved "..item_name.." to output chest")        
-        end 
+        sleep(1)
     end
-    sleep(1)
 end
+
+test_wrapper()

@@ -1,9 +1,9 @@
 FUEL_CHEST = 1
 RESOURCE_CHEST = 2
 FUEL_STACK_SIZE = 64
-
+ 
 fuel_level = turtle.getFuelLevel()
-
+ 
 stone_variants = {
     "minecraft:cobblestone",
 --    "minecraft:gravel",
@@ -24,25 +24,25 @@ stone_variants = {
     "chisel:limestone",
     "chisel:limestone2"
 }
-
-falling_blocks = {
-    "minecraft:gravel",
-    "minecraft:sand"
-}
-
+ 
+--falling_blocks = {
+--    "minecraft:gravel",
+--    "minecraft:sand"
+--}
+ 
 --relative coordinates
-
+ 
 coordinates = {0, 0, 0} -- x y z
 directions = {"front", "right", "back", "left"}
 current_direction = 1
-
+ 
 function test_print()
     print("harambe")
 end
-
+ 
 function log(error_code, error_desc)
 end
-
+ 
 function set_relative_direction(dir)
     print(current_direction)
     if dir == "front" then
@@ -63,7 +63,7 @@ function set_relative_direction(dir)
         end
     end
 end
-
+ 
 function go_to_start()
     print("gotostart called")
     if coordinates[2] > 0 then
@@ -73,7 +73,7 @@ function go_to_start()
         set_relative_direction("front")
         vertical_dig( math.abs(coordinates[2]) )
     end
-
+ 
     if coordinates[1] > 0 then
         set_relative_direction("left")
         vertical_dig( coordinates[1] )
@@ -81,10 +81,10 @@ function go_to_start()
         set_relative_direction("right")
         vertical_dig( math.abs( coordinates[1] ) )
     end
-
+ 
     set_relative_direction("front")
 end
-
+ 
 function tracked_turn(dir)
     print("direction is "..current_direction.."turning")
     if dir == "right" then
@@ -94,7 +94,7 @@ function tracked_turn(dir)
         current_direction = current_direction - 1
         turtle.turnLeft()
     end
-
+ 
     if current_direction > 4 then
         current_direction = current_direction - 4
     elseif current_direction <= 0 then
@@ -102,7 +102,7 @@ function tracked_turn(dir)
     end
     print("current dir: "..current_direction.." coords: "..coordinates[1].." "..coordinates[2])
 end
-
+ 
 function check_and_refuel()
 --TODO: check id of FUEL_SLOT and move it away if its not valid
     fuel_level = turtle.getFuelLevel()
@@ -115,24 +115,24 @@ function check_and_refuel()
             turtle.dig()
             turtle.place()
         end
-
+ 
         if not turtle.suck(FUEL_STACK_SIZE) then
             log("e", "Fuel chest empty.")
         end
-
+ 
         if not turtle.refuel(FUEL_STACK_SIZE) then
             local wrong_fuel = turtle.getItemDetail()["name"]
             log("e", "Incompatible Fuel"..wrong_fuel)
             turtle.drop()
         end
-
+ 
         turtle.dig()
         tracked_turn("right")
         tracked_turn("right")
         fuel_level = turtle.getFuelLevel()
     end
 end
-
+ 
 function check_and_empty_inv()
 --TODO: check iterating list of turtle.drop against constants to make the slots customizable
     while (turtle.getItemCount(16) ~= 0) do
@@ -143,21 +143,21 @@ function check_and_empty_inv()
             turtle.dig()
             turtle.place()
         end
-
+ 
         for i=3,16 do
             turtle.select(i)
             turtle.drop()
         end
-
+ 
         turtle.select(RESOURCE_CHEST)
         turtle.dig()
-
+ 
         tracked_turn("right")
         tracked_turn("right")
-
+ 
     end
 end
-
+ 
 function check_against_stone_variants(block)
     for i, block_name in pairs(stone_variants) do
         if block_name == nil then
@@ -168,35 +168,18 @@ function check_against_stone_variants(block)
     end
     return false
 end
-
-function handle_falling_blocks(block)
-    for i, block_name in pairs(falling_blocks) do
-        if block_name == nil then
-            return false
-        elseif block_name == block then
-            turtle.dig()
-            sleep(0.5)
-
-            local success, next_block = turtle.inspect()
-            if success then
-                local next_block_name = next_block["name"]
-                handle_falling_blocks(next_block_name)
-            end
-        end
-    end
-end
-
+ 
 function check_if_bedrock_around()
     local success_front, block_front = turtle.inspect()
     local success_down, block_down = turtle.inspectDown()
-
+ 
     if (block_front["name"] == "minecraft:bedrock") or (block_down["name"] == "minecraft:bedrock") then
         return true
     else
         return false
     end
 end
-
+ 
 function go_down(depth)
     for i=1,depth do
         if not turtle.down() then
@@ -208,27 +191,45 @@ function go_down(depth)
     end
     return true
 end
-
+ 
 function vertical_dig(steps)
     for i=1,steps do
         check_and_refuel()
         check_and_empty_inv()
-
-        local success_front, block_front = turtle.inspect()
-        if success_front then
-            handle_falling_blocks(block_front)
+ 
+        do
+            local success_front, block_front = turtle.inspect()
+    
+            while (success_front) and ((block_front["name"] == "minecraft:gravel") or (block_front["name"] == "minecraft:sand")) do
+                print("debug gravel"..block_front["name"])
+                turtle.dig()
+                sleep(1)
+                success_front, block_front = turtle.inspect()
+            end
         end
 
         if not turtle.forward() then
             turtle.dig()
             while not turtle.forward() do
+                
+                do
+                    local success_front, block_front = turtle.inspect()
+            
+                    while (success_front) and ((block_front["name"] == "minecraft:gravel") or (block_front["name"] == "minecraft:sand")) do
+                        print("debug gravel"..block_front["name"])
+                        turtle.dig()
+                        sleep(1)
+                        success_front, block_front = turtle.inspect()
+                    end
+                end
+                
                 sleep(1)
             end
         end
-
+ 
         local success_top, block_top = turtle.inspectUp()
         local success_down, block_down = turtle.inspectDown()
-
+ 
         if (success_top or success_down) then
             check_and_empty_inv()
             if not check_against_stone_variants(block_top["name"]) then
@@ -239,7 +240,7 @@ function vertical_dig(steps)
             end
         end
     end
-
+ 
     if current_direction == 1 then
         coordinates[2] = coordinates[2] + steps
     elseif current_direction == 2 then
@@ -250,7 +251,7 @@ function vertical_dig(steps)
         coordinates[1] = coordinates[1] - steps
     end
 end
-
+ 
 --not used
 function standard_dig()
     check_and_refuel()
@@ -260,7 +261,7 @@ function standard_dig()
     end
     turtle.dig()
 end
-
+ 
 function dig_layer_spiral(width)
     local distance_to_dig = width-1
     vertical_dig(distance_to_dig)
@@ -272,6 +273,6 @@ function dig_layer_spiral(width)
         tracked_turn("right")
         distance_to_dig = distance_to_dig - 1
     end
-
+ 
     go_to_start()
 end
